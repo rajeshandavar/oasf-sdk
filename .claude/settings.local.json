@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(task:*)",
+      "Bash(go version:*)",
+      "Bash(go build:*)",
+      "Bash($PORT = Get-Random -Minimum 30000 -Maximum 40000)",
+      "Bash($env:OASF_SDK_LISTEN_ADDRESS = \"0.0.0.0:$PORT\")",
+      "Bash(Write-Host \"Starting OASF SDK server on port $PORT...\")",
+      "Bash(Write-Host \"Server address: 0.0.0.0:$PORT\")",
+      "Bash(.binoasf-sdk.exe)",
+      "Bash(docker buildx bake:*)",
+      "Bash(go mod tidy:*)",
+      "Bash(CGO_ENABLED=0 go build:*)",
+      "Bash(wsl --list:*)",
+      "Bash(grpcurl:*)",
+      "Bash(go install:*)",
+      "Bash($env:PATH = \"$env:USERPROFILE\\\\go\\\\bin;$env:PATH\")",
+      "Bash(~/go/bin/grpcurl:*)"
+    ]
+  }
+}
