@@ -4,7 +4,7 @@
 version: "3"
 
 vars:
-  BIN_DIR: "{{ .ROOT_DIR }}/bin"
+  BIN_DIR: "{{ .ROOT_DIR | toSlash }}/bin"
   GO_MOD_DIR: "pkg server e2e"
   HELM_CHART_OCI_REGISTRY: "oci://ghcr.io/agntcy/oasf-sdk/helm-charts"
 
@@ -20,6 +20,7 @@ vars:
   GOLANGCI_LINT_BIN: "{{ .BIN_DIR }}/golangci-lint-{{.GOLANGCI_LINT_VERSION}}"
   HELM_VERSION: "3.16.3"
   HELM_BIN: "{{ .BIN_DIR }}/helm-{{.HELM_VERSION}}"
+  GRPCWEBPROXY_BIN: "{{ .BIN_DIR }}/grpcwebproxy{{exeExt}}"
 
 includes:
   e2e:
@@ -221,8 +222,17 @@ tasks:
     internal: true
     run: once
     cmd: mkdir -p {{.BIN_DIR}}
-    status:
       - test -d {{.BIN_DIR}}
+
+  deps:grpcwebproxy:
+    desc: Install grpcwebproxy
+    internal: true
+    deps:
+      - deps:bin-dir
+    cmds:
+      - GOBIN={{.BIN_DIR}} go install github.com/improbable-eng/grpc-web/go/grpcwebproxy@latest
+    status:
+      - test -f {{.GRPCWEBPROXY_BIN}}
 
   deps:protoc:
     desc: Ensure supported Protoc version and plugins are installed
@@ -338,11 +348,10 @@ tasks:
 
   evaluator:proxy:
     desc: Start grpcwebproxy for gRPC-web translation
-    preconditions:
-      - sh: which grpcwebproxy
-        msg: "grpcwebproxy not found. Install with: go install github.com/improbable-eng/grpc-web/go/grpcwebproxy@latest"
+    deps:
+      - task: deps:grpcwebproxy
     cmds:
-      - grpcwebproxy --backend_addr=localhost:31234 --run_tls_server=false --allow_all_origins --server_http_debug_port=8080
+      - "{{.GRPCWEBPROXY_BIN}} --backend_addr=localhost:31234 --run_tls_server=false --allow_all_origins --server_http_debug_port=8080"
 
   evaluator:server:
     desc: Start OASF SDK gRPC server
