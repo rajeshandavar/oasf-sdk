@@ -30,7 +30,15 @@
       "Bash(docker --version:*)",
       "Bash(.\\\\\\\\bin\\\\\\\\oasf-sdk.exe:*)",
       "Bash(./bin/oasf-sdk.exe:*)",
-      "Bash(timeout 3:*)"
+      "Bash(timeout 3:*)",
+      "Bash(npm create:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(npx --yes tailwindcss init -p)",
+      "Bash(node:*)",
+      "Bash(npx buf generate:*)",
+      "Bash(timeout 5 npm run dev:*)",
+      "Bash(where:*)",
+      "Bash(netstat:*)"
     ]
   }
 }

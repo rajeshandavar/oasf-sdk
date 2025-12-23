@@ -48,7 +48,7 @@ tasks:
       GOOS: "{{ .GOOS | default OS }}"
       GOARCH: "{{ .GOARCH | default ARCH }}"
       BINARY_NAME: '{{ .BINARY_NAME | default "oasf-sdk" }}'
-      OUT_BINARY: '{{ .OUT_BINARY | default (printf "%s/%s" .BIN_DIR .BINARY_NAME) }}'
+      OUT_BINARY: '{{ .OUT_BINARY | default (printf "%s/%s%s" .BIN_DIR .BINARY_NAME exeExt) }}'
     cmds:
       - CGO_ENABLED=0 GOOS={{ .GOOS }} GOARCH={{ .GOARCH }} BINARY_NAME={{ .BINARY_NAME }} go build -ldflags="-s -w -extldflags -static" -o "{{ .OUT_BINARY }}" cmd/main.go
 
@@ -320,3 +320,50 @@ tasks:
       - chmod +x {{.HELM_BIN}}
     status:
       - test -x {{.HELM_BIN}}
+
+  ##
+  ## Evaluator (gRPC-web testing webapp)
+  ##
+  evaluator:install:
+    desc: Install evaluator webapp dependencies
+    dir: ./evaluator
+    cmds:
+      - npm install
+
+  evaluator:dev:
+    desc: Start evaluator webapp dev server
+    dir: ./evaluator
+    cmds:
+      - npm run dev
+
+  evaluator:proxy:
+    desc: Start grpcwebproxy for gRPC-web translation
+    preconditions:
+      - sh: which grpcwebproxy
+        msg: "grpcwebproxy not found. Install with: go install github.com/improbable-eng/grpc-web/go/grpcwebproxy@latest"
+    cmds:
+      - grpcwebproxy --backend_addr=localhost:31234 --run_tls_server=false --allow_all_origins --server_http_debug_port=8080
+
+  evaluator:server:
+    desc: Start OASF SDK gRPC server
+    deps:
+      - compile
+    dir: "{{.BIN_DIR}}"
+    cmds:
+      - ./oasf-sdk{{exeExt}}
+
+  evaluator:start:
+    desc: Start all evaluator services (server, proxy, webapp) - run each in separate terminals
+    cmds:
+      - cmd: |
+          echo "To run the evaluator, open 3 terminals and run:"
+          echo ""
+          echo "  Terminal 1: task evaluator:server"
+          echo "  Terminal 2: task evaluator:proxy"
+          echo "  Terminal 3: task evaluator:dev"
+          echo ""
+          echo "Then open http://localhost:5173 in your browser."
+          echo ""
+          echo "Prerequisites:"
+          echo "  - grpcwebproxy: go install github.com/improbable-eng/grpc-web/go/grpcwebproxy@latest"
+          echo "  - npm dependencies: task evaluator:install"

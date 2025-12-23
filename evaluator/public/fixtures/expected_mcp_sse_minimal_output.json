@@ -1,0 +1,44 @@
+{
+  "_comment_created_at": "This field is dynamically generated at runtime and excluded from test comparison",
+  "authors": [
+    "gomarble"
+  ],
+  "description": "GoMarble MCP API Server",
+  "domains": [
+    {
+      "id": 10204,
+      "name": "technology/software_engineering/apis_integration"
+    }
+  ],
+  "locators": [
+    {
+      "type": "source_code",
+      "url": "https://example.com/mcp-server.git"
+    }
+  ],
+  "modules": [
+    {
+      "data": {
+        "servers": [
+          {
+            "capabilities": [],
+            "description": "GoMarble MCP API Server",
+            "name": "ai.gomarble/mcp-api",
+            "type": "sse",
+            "url": "https://apps.gomarble.ai/mcp-api/sse"
+          }
+        ]
+      },
+      "name": "integration/mcp"
+    }
+  ],
+  "name": "ai.gomarble/mcp-api",
+  "schema_version": "0.8.0",
+  "skills": [
+    {
+      "id": 703,
+      "name": "multi_modal/any_to_any"
+    }
+  ],
+  "version": "1.0.0"
+}

@@ -1,0 +1,13 @@
+version: v2
+plugins:
+  - remote: buf.build/bufbuild/es:v2.2.2
+    out: src/gen
+    opt:
+      - target=ts
+  - remote: buf.build/connectrpc/es:v1.6.1
+    out: src/gen
+    opt:
+      - target=ts
+inputs:
+  - module: buf.build/agntcy/oasf-sdk
+  - module: buf.build/agntcy/oasf

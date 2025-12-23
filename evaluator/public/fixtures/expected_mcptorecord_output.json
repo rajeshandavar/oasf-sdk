@@ -1,0 +1,60 @@
+{
+  "_comment_created_at": "This field is dynamically generated at runtime and excluded from test comparison",
+  "annotations": {
+    "mcp.package.@modelcontextprotocol/server-filesystem.registryType": "npm",
+    "mcp.package.@modelcontextprotocol/server-filesystem.version": "1.0.0"
+  },
+  "authors": [
+    "modelcontextprotocol"
+  ],
+  "description": "Secure file system operations through MCP",
+  "domains": [
+    {
+      "id": 10204,
+      "name": "technology/software_engineering/apis_integration"
+    }
+  ],
+  "locators": [
+    {
+      "type": "source_code",
+      "url": "https://github.com/modelcontextprotocol/servers"
+    }
+  ],
+  "modules": [
+    {
+      "data": {
+        "servers": [
+          {
+            "args": [
+              "-y",
+              "@modelcontextprotocol/server-filesystem",
+              "/tmp"
+            ],
+            "capabilities": [],
+            "command": "npx",
+            "description": "Secure file system operations through MCP",
+            "env_vars": [
+              {
+                "default_value": "info",
+                "description": "Log level for MCP server",
+                "name": "MCP_LOG_LEVEL"
+              }
+            ],
+            "name": "io.github.modelcontextprotocol/filesystem",
+            "type": "local"
+          }
+        ]
+      },
+      "name": "integration/mcp"
+    }
+  ],
+  "name": "io.github.modelcontextprotocol/filesystem",
+  "schema_version": "0.8.0",
+  "skills": [
+    {
+      "id": 703,
+      "name": "multi_modal/any_to_any"
+    }
+  ],
+  "version": "1.0.0"
+}
