@@ -16,7 +16,21 @@
       "Bash(grpcurl:*)",
       "Bash(go install:*)",
       "Bash($env:PATH = \"$env:USERPROFILE\\\\go\\\\bin;$env:PATH\")",
-      "Bash(~/go/bin/grpcurl:*)"
+      "Bash(~/go/bin/grpcurl:*)",
+      "Bash(git log:*)",
+      "Bash(go test:*)",
+      "Bash(ls:*)",
+      "Bash(for dir in pkg server e2e)",
+      "Bash(do if [ -f \"$dir/go.mod\" ])",
+      "Bash(then echo \"$dir\")",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(find:*)",
+      "Bash(where find:*)",
+      "Bash(docker --version:*)",
+      "Bash(.\\\\\\\\bin\\\\\\\\oasf-sdk.exe:*)",
+      "Bash(./bin/oasf-sdk.exe:*)",
+      "Bash(timeout 3:*)"
     ]
   }
 }

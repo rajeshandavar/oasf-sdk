@@ -5,8 +5,7 @@ version: "3"
 
 vars:
   BIN_DIR: "{{ .ROOT_DIR }}/bin"
-  GO_MOD_DIR:
-    sh: find . -name go.mod -exec dirname {} \;
+  GO_MOD_DIR: "pkg server e2e"
   HELM_CHART_OCI_REGISTRY: "oci://ghcr.io/agntcy/oasf-sdk/helm-charts"
 
   PROTOC_VERSION: "27.1"
@@ -66,8 +65,7 @@ tasks:
   test:
     desc: Run Go unit tests for all modules (excludes e2e)
     vars:
-      GO_MOD_DIR:
-        sh: find . -name go.mod -not -path "./e2e/*" -exec dirname {} \;
+      GO_MOD_DIR: "pkg server"
     cmds:
       - for: { var: GO_MOD_DIR }
         cmd: echo "Running tests in {{.ITEM}}" && cd {{.ITEM}} && go test -v ./...
